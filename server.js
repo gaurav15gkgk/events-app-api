@@ -1,9 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const morgan = require('morgan')
+
+const eventRoute = require('./routes/event')
 
 
 const app = express();
 require('dotenv').config()
+app.use(morgan('tiny'))
+app.use('/',eventRoute)
 
 app.get('/', (req, res) => {
     res.send('Hello')
