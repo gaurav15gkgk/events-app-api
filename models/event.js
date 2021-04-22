@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const { ObjectId } = mongoose.Schema
 
 const EventSchema = new mongoose.Schema({
     EventName: {
@@ -20,11 +20,25 @@ const EventSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    
+
     EventDescription:{
         type:String,
         required: true
-    }
+    },
+
+    postedBy: {
+        type: ObjectId,
+        ref: 'User'
+    },
+
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+
+    updated: Date
+
+
 })
 
 const Event = mongoose.model("Event", EventSchema)
