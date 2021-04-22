@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const expressValidator = require("express-validator")
 const fs = require('fs')
+const cors = require('cors')
 
 
 // declared routes 
@@ -21,6 +22,7 @@ app.use(morgan('tiny'))
 app.use(bodyParser.json())
 app.use(expressValidator())
 app.use(cookieParser())
+app.use(cors())
 
 //use Routes
 app.use('/',eventRoute)
