@@ -1,21 +1,18 @@
 const { Event }= require('../models/event')
 
-getEvents = (req, res) => {
-    res.json({
-        events: [
-            {
-                EventName: "FootBall Events",
-                EventType: "Sports",
-                EventOrganiser: "FIFA",
-                EventDescription: "this is the football event"
-            }
-        ]
-    })
+getEvents = async(req, res) => {
+   const events = await Event.find()
+   .then( events => {
+       res.status(200).json({ events: events })
+   })
+   .catch(
+       err => console.log(err)
+   )
 }
 
-createEvent = (req, res) => {
+createEvent = async(req, res) => {
     
-    const event = new Event(req.body)
+    const event = await new Event(req.body)
     event.save().then(result => {
         res.status(200).json({
             event : result
