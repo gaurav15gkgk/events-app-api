@@ -1,5 +1,6 @@
 const brcypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const expressJwt = require('express-jwt')
 
 
 const { User } = require('../models/user')
@@ -62,8 +63,28 @@ const loginUser = async(req, res) => {
     }
 }
 
+//for logging out the user 
+
+const logoutUser = (req, res ) => {
+    res.clearCookie('tkn');
+    res.json({
+        message: "Logout Successful "
+    })
+}
+
+//for protecting certain routes
+
+const requireLogin = expressJwt({
+    secret: process.env.JWT_SECRET,
+    userProperty: 'auth',
+    algorithms: ['HS256']
+})
+
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser,
+    requireLogin
+
 }
