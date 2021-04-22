@@ -1,5 +1,5 @@
 
-
+// create Event Validator
 createEventValidator = (req, res, next ) => {
     //for the Event Name
     req.check('EventName',"Write an Event Name").notEmpty()
@@ -50,7 +50,48 @@ createEventValidator = (req, res, next ) => {
     next()
 }
 
+// User Register Validator 
+
+const userRegisterValidator = (req, res, next) => {
+    //checking name is not null and between 3-25 characters
+    req.check('name', "Name is required ").notEmpty()
+    req.check('name', "Name must be from 3 to 25 character ").isLength({
+        min: 3,
+        max: 25
+    })
+
+    //checking email is not null, valid and normailized 
+    req.check('email', 'Email must be between 3 to 32 characters')
+        .matches(/.+\@.+\..+/)
+        .withMessage('Email must contain @')
+        .isLength({
+            min: 4,
+            max: 2000
+        });
+    
+    //checking for password 
+    req.check('hashed_password', 'Password is required').notEmpty()
+    req.check('hashed_password')
+            .isLength({ min: 6})
+            .withMessage('Password must contain at least 6 characters')
+            .matches(/\d/)
+            .withMessage('Password must contain a number')
+    
+    //check for any errors
+    const errors = req.validationErrors()
+    
+    //if find any error it shows the first one 
+    if(errors){
+        const firstError = errors.map(error => error.msg)[0];
+        return res.status(400).json({ error: firstError})
+    }
+
+    //proceed to next middleware
+    next()
+}
+
 module.exports = {
     createEventValidator,
+    userRegisterValidator
    
 }

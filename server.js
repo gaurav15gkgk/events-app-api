@@ -6,6 +6,7 @@ const expressValidator = require("express-validator")
 
 
 const eventRoute = require('./routes/event')
+const userRoute = require('./routes/user')
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(expressValidator())
 app.use(morgan('tiny'))
 
 app.use('/',eventRoute)
+app.use('/', userRoute)
 
 app.get('/', (req, res) => {
     res.send('Hello')
