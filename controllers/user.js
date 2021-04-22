@@ -1,7 +1,9 @@
 const brcypt = require('bcrypt')
-const { body } = require('express-validator/check');
+const jwt = require('jsonwebtoken')
+
 
 const { User } = require('../models/user')
+require('dotenv').config()
 
 // register User controller
 
@@ -41,11 +43,21 @@ const loginUser = async(req, res) => {
       // check user password with hashed password stored in the database
       const validPassword = await brcypt.compare(body.hashed_password, user.hashed_password);
       if (validPassword) {
-        res.status(200).json({ message: "User succesfully Login" });
+        //generate a token with userid and secret
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET)
+
+        //persist the token as 'tkn' in cookie with expiry date 
+        res.cookie("tkn", token , { expire: new Date() +9999 })
+        //return response with user and token to frontend client 
+        const{ _id, name , email } = user
+
+        res.status(200).json({ token, user: { _id, email, name } });
       } else {
+          // password is incorrect
         res.status(400).json({ error: "Password is incorrect! Please enter the correct password" });
       }
     } else {
+        //user didnt have any account 
       res.status(401).json({ error: "User does not exist! Please register" });
     }
 }

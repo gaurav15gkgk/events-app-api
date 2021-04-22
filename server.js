@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const expressValidator = require("express-validator")
 
 
@@ -11,11 +12,13 @@ const userRoute = require('./routes/user')
 
 const app = express();
 require('dotenv').config()
+app.use(morgan('tiny'))
 app.use(bodyParser.json())
 
 app.use(expressValidator())
+app.use(cookieParser())
 
-app.use(morgan('tiny'))
+
 
 app.use('/',eventRoute)
 app.use('/', userRoute)
