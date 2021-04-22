@@ -15,6 +15,12 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
+    DateOfEvent:{
+        type: Date,
+        required: true
+    },
+    
     EventDescription:{
         type:String,
         required: true
