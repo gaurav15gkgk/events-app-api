@@ -10,6 +10,6 @@ router.post('/login',loginUser )
 router.get('/logout', logoutUser )
 
 //any route containing :userId , it will execute userById 
-router.param("userId", userById)
+
 
 module.exports = router

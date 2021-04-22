@@ -9,6 +9,7 @@ const expressValidator = require("express-validator")
 
 const eventRoute = require('./routes/event')
 const authRoute = require('./routes/auth')
+const userRoute = require('./routes/user')
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(cookieParser())
 
 app.use('/',eventRoute)
 app.use('/', authRoute)
+app.use('/', userRoute)
 
 app.get('/', (req, res) => {
     res.send('Hello')

@@ -81,10 +81,25 @@ const requireLogin = expressJwt({
 })
 
 
+
+//to verify the logged in user is the user in which changes are happening
+const hasAuthotization = (req, res, next) => {
+    const authorized = req.profile && req.auth && req.profile._id === req.auth._id;
+
+    if(!authorized){
+        return res.status(403).json({
+            error: "User is not authorized to perfrom this action "
+        })
+    }
+}
+
+
+
 module.exports = {
     registerUser,
     loginUser,
     logoutUser,
-    requireLogin
+    requireLogin,
+    hasAuthotization
 
 }
