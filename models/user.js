@@ -1,6 +1,8 @@
+//Dependencies requiered
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+//User Schema declared
 const UserSchema = new Schema({
     name: {
         type: String,

@@ -1,8 +1,10 @@
+//Dependencies Required
 const  _= require('lodash')
 
+//Some created modules required
 const { Event }= require('../models/event')
 
-
+// to add event when eventId is in URL
 const eventById = (req, res, next, id) => {
     console.log(id)
     Event.findById(id)
@@ -15,11 +17,12 @@ const eventById = (req, res, next, id) => {
                 })
             }
             req.event = event
-            console.log(req.event)
+           
             next()
         })
 }
 
+//to get all events 
 const getEvents = async(req, res) => {
    const events = await Event.find()
         .populate("postedBy", "_id name email")
@@ -31,6 +34,7 @@ const getEvents = async(req, res) => {
    )
 }
 
+// to create Event 
 const createEvent = async(req, res) => {
     
     const event = await new Event(req.body)
@@ -44,6 +48,7 @@ const createEvent = async(req, res) => {
     });
 };
 
+// to show all the events by an user
 const eventsByUser = (req, res) => {
     Event.find({ postedBy: req.profile._id })
         .populate('postedBy', '_id name')
@@ -60,6 +65,7 @@ const eventsByUser = (req, res) => {
         })
 }
 
+// to verify the user which created that event is the logged in user
 const isEventOrganiser = (req, res, next ) => {
     let sameUser = req.event && req.auth && req.event.postedBy._id == req.auth._id
    
@@ -72,6 +78,7 @@ const isEventOrganiser = (req, res, next ) => {
     next()
 }
 
+// to update event 
 const updateEvent = (req, res, next ) => {
     let event = req.event
     event = _.extend(event , req.body)
@@ -86,6 +93,7 @@ const updateEvent = (req, res, next ) => {
     })
 }
 
+// to delete an event 
 const deleteEvent = (req, res) => {
     let event = req.event
     event.remove((err, event) => {

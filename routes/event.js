@@ -1,6 +1,8 @@
+//Dependicies Requiered
 const express = require('express')
-const {userById} = require('../controllers/user')
 
+//Different created modules requiered
+const {userById} = require('../controllers/user')
 const {
     getEvents, 
     createEvent,
@@ -12,15 +14,29 @@ const {
 } = require('../controllers/event')
 const { createEventValidator } = require('../validators')
 const { requireLogin } = require('../controllers/auth')
+
+// Initialized express Router
 const router = express.Router()
 
-router.get('/', getEvents)
+//to get all the events
+router.get('/events', getEvents)
+
+//to create new event by a loggedin user
 router.post('/event/new/:userId',requireLogin, createEventValidator, createEvent)
+
+//to update an event
 router.put('/event/:eventId', requireLogin, isEventOrganiser, updateEvent)
+
+//to delete an event
 router.delete('/event/:eventId', requireLogin, isEventOrganiser, deleteEvent)
+
+//to show all the events by a user
 router.get('/events/by/:userId', requireLogin, eventsByUser)
 
-router.param('userId', userById);
+//to call userById function when userId is in URL
+router.param('userId', userById)
+
+//to call eventById function when eventId is in URL
 router.param('eventId', eventById)
 
 module.exports = router

@@ -1,13 +1,13 @@
+//Dependencies required
 const brcypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const expressJwt = require('express-jwt')
 
-
+// Require some created modules
 const { User } = require('../models/user')
 require('dotenv').config()
 
 // register User controller
-
 const registerUser = async (req, res) => {
 
     const userExists = await User.findOne({ email: req.body.email })
@@ -36,7 +36,6 @@ const registerUser = async (req, res) => {
 }
 
 // login user controller
-
 const loginUser = async(req, res) => {
     const body = req.body;
     const user = await User.findOne({ email: body.email });

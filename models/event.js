@@ -1,6 +1,8 @@
+//Dependencies required
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Schema
 
+//Event Schema is declared
 const EventSchema = new mongoose.Schema({
     EventName: {
         type: String,

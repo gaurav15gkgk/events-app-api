@@ -1,9 +1,9 @@
+//Dependencies Required
 const {User} = require('../models/user')
 const _=require("lodash")
-const { identity } = require('lodash')
+
 
 //when userid is added on the url this method will add profile in request body 
-
 const userById = async (req, res, next, id ) => {
     await  User.findById(id).exec((err, user) => {
         if( err || !user)
@@ -17,11 +17,13 @@ const userById = async (req, res, next, id ) => {
     })
  }
 
+ // to show a user 
 const getUser = (req, res) => {
     req.profile.hashed_password = undefined
     return res.json(req.profile)
 }
 
+// to update user
 const updateUser = (req, res, next ) => {
     let user = req.profile
     user = _.extend(user, req.body)
@@ -37,6 +39,7 @@ const updateUser = (req, res, next ) => {
     res.json({ user })
 }
 
+//to delete user
 const deleteUser = (req, res, next ) => {
     let user = req.profile
     user.remove((err, user) => {

@@ -1,0 +1,9 @@
+{
+    "/events": " get rquest to show all the events",
+    "/register": " post request to register a user",
+    "/login": " post request to login a user",
+    "/user/:userId": " get request to fetch the user whose userId is in Url , put request to update user details , delete request to delete the user",
+    "/event/new/:userId" : "post request to create new event from a logged in user",
+    "/event/:eventId" : "put request to update the event detalis , delete request to delete the event",
+    "/events/by/:userId": "get request to show the events by a user"
+}
