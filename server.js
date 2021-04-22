@@ -6,8 +6,9 @@ const cookieParser = require('cookie-parser')
 const expressValidator = require("express-validator")
 
 
+
 const eventRoute = require('./routes/event')
-const userRoute = require('./routes/user')
+const authRoute = require('./routes/auth')
 
 
 const app = express();
@@ -20,12 +21,23 @@ app.use(cookieParser())
 
 
 
+
 app.use('/',eventRoute)
-app.use('/', userRoute)
+app.use('/', authRoute)
 
 app.get('/', (req, res) => {
     res.send('Hello')
 })
+
+app.use(function (err, req, res, next) {
+    if (err.name == 'UnauthorizedError') {
+      res.status(401).json({
+          error: "Unauthorized User"
+      });
+    }
+  
+  });
+
 
 
 
