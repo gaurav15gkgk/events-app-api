@@ -27,7 +27,7 @@ const getEvents = async(req, res) => {
    const events = await Event.find()
         .populate("postedBy", "_id name email")
    .then( events => {
-       res.status(200).json({ events: events })
+       res.status(200).json( events )
    })
    .catch(
        err => console.log(err)
@@ -108,6 +108,10 @@ const deleteEvent = (req, res) => {
     })
 }
 
+const singleEvent = (req, res) => {
+    return res.json(req.event);
+};
+
 
 
 module.exports = {
@@ -117,5 +121,6 @@ module.exports = {
     eventById,
     updateEvent,
     isEventOrganiser,
-    eventsByUser
+    eventsByUser,
+    singleEvent
 }

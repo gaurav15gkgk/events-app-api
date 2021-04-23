@@ -10,7 +10,8 @@ const {
     updateEvent,
     eventById,
     deleteEvent,
-    eventsByUser
+    eventsByUser,
+    singleEvent
 } = require('../controllers/event')
 const { createEventValidator } = require('../validators')
 const { requireLogin } = require('../controllers/auth')
@@ -36,7 +37,11 @@ router.get('/events/by/:userId', requireLogin, eventsByUser)
 //to call userById function when userId is in URL
 router.param('userId', userById)
 
+router.get('/events/:eventId', singleEvent)
+
 //to call eventById function when eventId is in URL
 router.param('eventId', eventById)
+
+
 
 module.exports = router
