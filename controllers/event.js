@@ -36,7 +36,7 @@ const getEvents = async(req, res) => {
 
 // to create Event 
 const createEvent = async(req, res) => {
-    
+    console.log(req.profile)
     const event = await new Event(req.body)
 
     req.profile.hashed_password = undefined
