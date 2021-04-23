@@ -76,7 +76,8 @@ const logoutUser = (req, res ) => {
 const requireLogin = expressJwt({
     secret: process.env.JWT_SECRET,
     userProperty: 'auth',
-    algorithms: ['HS256']
+    algorithms: ['HS256'],
+    
 })
 
 
